@@ -18,12 +18,10 @@ Xtrain, Xtest, ytrain, ytest = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y   # y should stay balanced across the splits
 )
 
-import os
-os.makedirs("tourism_project/data/processed", exist_ok=True)
-Xtrain.to_csv("tourism_project/data/processed/Xtrain.csv", index=False)
-Xtest.to_csv("tourism_project/data/processed/Xtest.csv", index=False)
-ytrain.to_csv("tourism_project/data/processed/ytrain.csv", index=False)
-ytest.to_csv("tourism_project/data/processed/ytest.csv", index=False)
+Xtrain.to_csv("Xtrain.csv", index=False)
+Xtest.to_csv("Xtest.csv", index=False)
+ytrain.to_csv("ytrain.csv", index=False)
+ytest.to_csv("ytest.csv", index=False)
 
 print("Data prepared: train/test splits written.")
 print("ProdTaken distribution in train:")
