@@ -14,10 +14,10 @@ mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("wellness_tourism_prediction")
 
 # Xtrain/Xtest/ytrain/ytest are downloaded from the previous job's artifact
-Xtrain = pd.read_csv("wellness_tourism_mlops/data/processed/Xtrain.csv")
-Xtest = pd.read_csv("wellness_tourism_mlops/data/processed/Xtest.csv")
-ytrain = pd.read_csv("wellness_tourism_mlops/data/processed/ytrain.csv").squeeze()
-ytest = pd.read_csv("wellness_tourism_mlops/data/processed/ytest.csv").squeeze()
+Xtrain = pd.read_csv("Xtrain.csv")
+Xtest = pd.read_csv("Xtest.csv")
+ytrain = pd.read_csv("ytrain.csv").squeeze()
+ytest = pd.read_csv("ytest.csv").squeeze()
 
 numeric_features = [
     'Age', 'CityTier', 'DurationOfPitch', 'NumberOfPersonVisiting',
@@ -85,7 +85,7 @@ with mlflow.start_run():
         "test_f1-score": test_report['1']['f1-score']
     })
 
-    model_path = "wellness_tourism_mlops/deployment/best_model.pkl"
+    model_path = "tourism_project/deployment/best_model.pkl"
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
