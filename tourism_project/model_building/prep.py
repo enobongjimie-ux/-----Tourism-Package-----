@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("wellness_tourism_mlops/data/raw/tourism.csv")   # path to the registered tourism.csv inside the data folder
+df = pd.read_csv("tourism_project/data/raw/tourism.csv")   # path to the registered tourism.csv inside the data folder
 df.drop(columns=["CustomerID"], inplace=True)   # drop the customer identifier column, it is not a predictive feature
 
 # NOTE: categorical columns are intentionally left as raw strings.
@@ -18,10 +18,12 @@ Xtrain, Xtest, ytrain, ytest = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y   # y should stay balanced across the splits
 )
 
-Xtrain.to_csv("wellness_tourism_mlops/data/processed/Xtrain.csv", index=False)
-Xtest.to_csv("wellness_tourism_mlops/data/processed/Xtest.csv", index=False)
-ytrain.to_csv("wellness_tourism_mlops/data/processed/ytrain.csv", index=False)
-ytest.to_csv("wellness_tourism_mlops/data/processed/ytest.csv", index=False)
+import os
+os.makedirs("tourism_project/data/processed", exist_ok=True)
+Xtrain.to_csv("tourism_project/data/processed/Xtrain.csv", index=False)
+Xtest.to_csv("tourism_project/data/processed/Xtest.csv", index=False)
+ytrain.to_csv("tourism_project/data/processed/ytrain.csv", index=False)
+ytest.to_csv("tourism_project/data/processed/ytest.csv", index=False)
 
 print("Data prepared: train/test splits written.")
 print("ProdTaken distribution in train:")
