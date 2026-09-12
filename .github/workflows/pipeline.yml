@@ -34,11 +34,11 @@ jobs:
           api.upload_file(
               path_or_fileobj='tourism_project/data/raw/tourism.csv',
               path_in_repo='tourism.csv',
-              repo_id='Enobong/tourism-wellness-dataset',
+              repo_id='ENOBONG-JIMIE IDIONG/tourism-wellness-dataset',
               repo_type='dataset',
               token='$HF_TOKEN',
           )
-          print('Uploaded tourism.csv to Hugging Face')
+          print('✅ Uploaded tourism.csv to Hugging Face')
           "
 
       - name: Upload Registered Dataset
@@ -74,8 +74,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -91,22 +89,10 @@ jobs:
           sleep 5
       - name: Model Building
         run: python tourism_project/model_building/train.py
-
       - name: Commit Trained Model
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          echo "── Looking for saved model ──"
-          ls -la tourism_project/deployment/ || true
-          find . -name "*.pkl" -not -path "./.git/*" || true
-
-          git pull --rebase origin main || echo "pull finished"
-
-          if [ -f tourism_project/deployment/best_model.pkl ]; then
-            git add tourism_project/deployment/best_model.pkl
-            git commit -m "Add trained model [skip ci]" || echo "no changes to commit"
-            git push origin main || echo "push done"
-          else
-            echo "best_model.pkl not found — skipping commit"
-          fi
+          git add tourism_project/deployment/*.pkl
+          git commit -m "Add trained model [skip ci]" || echo "No changes to commit"
+          git push
