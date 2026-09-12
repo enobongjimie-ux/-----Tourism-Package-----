@@ -1,6 +1,6 @@
 import pandas as pd
 
-RAW_PATH = "tourism_project/data/tourism.csv"  # path to the raw tourism.csv file inside the data folder
+RAW_PATH = "tourism_project/data/raw/tourism.csv"  # path to the raw tourism.csv file inside the data folder
 
 # Load the raw dataset
 df = pd.read_csv(RAW_PATH)
