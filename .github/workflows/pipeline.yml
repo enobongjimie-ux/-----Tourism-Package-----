@@ -22,6 +22,25 @@ jobs:
         run: pip install -r tourism_project/requirements.txt
       - name: Register Dataset
         run: python tourism_project/model_building/data_register.py
+
+      - name: Upload to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          pip install huggingface_hub
+          python -c "
+          from huggingface_hub import HfApi
+          api = HfApi()
+          api.upload_file(
+              path_or_fileobj='tourism_project/data/raw/tourism.csv',
+              path_in_repo='tourism.csv',
+              repo_id='Enobong/tourism-wellness-dataset',
+              repo_type='dataset',
+              token='$HF_TOKEN',
+          )
+          print('Uploaded tourism.csv to Hugging Face')
+          "
+
       - name: Upload Registered Dataset
         uses: actions/upload-artifact@v4
         with:
